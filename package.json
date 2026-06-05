@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "backend": "cd backend && npm install && npm run dev",
     "backend:start": "cd backend && npm start",
-    "start": "npm run dev"
+    "start": "npm run build && npm run preview"
   },
   "dependencies": {
     "react": "^18.2.0",
