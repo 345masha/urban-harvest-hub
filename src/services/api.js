@@ -1,7 +1,7 @@
 // Location: urban-harvest-hub/src/services/api.js
 import { products as initialProducts, workshops as initialWorkshops, events as initialEvents } from '../data/mockData';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 // Sync local storage state helper for offline mock fallback
 const getLocalStorageState = (key, defaultData) => {
