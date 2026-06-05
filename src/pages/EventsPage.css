@@ -1,0 +1,46 @@
+/* Location: urban-harvest-hub/src/pages/EventsPage.css */
+
+/* Horizontal scrollbar styling for weather & calendar strips */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Timeline specific offsets and connection lines */
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #e2e8f0;
+}
+
+.dark .timeline-item::after {
+  background-color: #334155;
+}
+
+/* Focus and keyboard navigation highlights */
+.event-card-interactive:focus-within {
+  outline: 3px solid #10b981;
+  outline-offset: 4px;
+}
