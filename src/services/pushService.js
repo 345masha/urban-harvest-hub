@@ -15,6 +15,8 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export const isPushSupported = () => {
   return 'serviceWorker' in navigator && 'PushManager' in window;
 };
@@ -26,7 +28,7 @@ export const requestNotificationPermission = async () => {
 
   const permission = await Notification.requestPermission();
   if (permission !== 'granted') {
-    throw new Error('Notification permission denied.');
+    throw new Error('Notification permission denied. Please allow notifications for this site in your browser settings.');
   }
   return permission;
 };
@@ -36,7 +38,10 @@ export const subscribeToPush = async () => {
     const registration = await navigator.serviceWorker.ready;
     
     // Fetch VAPID public key from backend
-    const response = await fetch('http://localhost:5000/api/notifications/vapidPublicKey');
+    const response = await fetch(`${API_BASE_URL}/api/notifications/vapidPublicKey`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch VAPID public key from server');
+    }
     const { publicKey } = await response.json();
     
     const convertedVapidKey = urlBase64ToUint8Array(publicKey);
@@ -48,7 +53,7 @@ export const subscribeToPush = async () => {
     });
 
     // Send subscription to backend
-    const res = await fetch('http://localhost:5000/api/notifications/subscribe', {
+    const res = await fetch(`${API_BASE_URL}/api/notifications/subscribe`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -77,7 +82,7 @@ export const unsubscribeFromPush = async () => {
       await subscription.unsubscribe();
       
       // Notify backend to remove subscription
-      await fetch('http://localhost:5000/api/notifications/unsubscribe', {
+      await fetch(`${API_BASE_URL}/api/notifications/unsubscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
